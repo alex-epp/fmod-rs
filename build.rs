@@ -19,7 +19,9 @@ fn find_libs_path(libs_path: PathBuf) -> Option<PathBuf> {
 
 fn main() {
     let base_path = PathBuf::from(std::option_env!("FMOD_PATH").unwrap_or("vendor/fmod/api"));
-    assert!(base_path.exists());
+    if !base_path.exists() {
+        panic!("base_path = {} does not exist", base_path.to_str().unwrap());
+    }
 
     let api_paths = vec!["core", "fsbank", "studio"]
         .iter()
